@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UDOS | Universal Dragon Operating System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --void:#050508;
+      --purple:#6d28d9;
+      --cyan:#06b6d4;
+      --magenta:#d946ef;
+      --amber:#f59e0b;
+      --green:#10b981;
+      --surface:#0a0a0f;
+      --surface2:#12121a;
+      --border:#1e1e2e;
+      --text:#e2e8f0;
+      --muted:#94a3b8;
+      --dim:#64748b;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--void);
+      color:var(--text);
+      font-family:'Rajdhani',sans-serif;
+      overflow-x:hidden;
+      line-height:1.6;
+    }
+
+    .cosmos{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(ellipse at 20% 50%,rgba(109,40,217,.13),transparent 50%),
+        radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.10),transparent 50%),
+        radial-gradient(ellipse at 50% 80%,rgba(217,70,239,.08),transparent 50%),
+        var(--void);
+    }
+
+    .stars{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background-image:
+        radial-gradient(1px 1px at 20px 30px,rgba(255,255,255,.45),transparent),
+        radial-gradient(1px 1px at 90px 40px,rgba(255,255,255,.35),transparent),
+        radial-gradient(1px 1px at 160px 120px,rgba(255,255,255,.25),transparent),
+        radial-gradient(1px 1px at 300px 150px,rgba(255,255,255,.35),transparent),
+        radial-gradient(1px 1px at 420px 180px,rgba(255,255,255,.22),transparent);
+      background-size:450px 220px;
+      animation:twinkle 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle{from{opacity:.45}to{opacity:1}}
+
+    nav{
+      position:fixed;
+      top:0;
+      width:100%;
+      z-index:20;
+      padding:1.2rem 2rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:linear-gradient(to bottom,rgba(5,5,8,.96),rgba(5,5,8,.50),transparent);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .logo{
+      font-family:'Orbitron',monospace;
+      font-weight:900;
+      font-size:1.25rem;
+      letter-spacing:2px;
+      background:linear-gradient(135deg,var(--cyan),var(--purple),var(--magenta));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .logo::before{
+      content:"🐉 ";
+      -webkit-text-fill-color:initial;
+      filter:drop-shadow(0 0 12px var(--cyan));
+    }
+
+    .nav-links{
+      display:flex;
+      gap:1.4rem;
+      list-style:none;
+    }
+
+    .nav-links a{
+      color:var(--muted);
+      text-decoration:none;
+      font-size:.9rem;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+
+    .nav-links a:hover{color:var(--cyan)}
+
+    .badge{
+      font-family:'Space Mono',monospace;
+      border:1px solid var(--cyan);
+      color:var(--cyan);
+      padding:.3rem .7rem;
+      font-size:.7rem;
+      background:rgba(6,182,212,.08);
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:8rem 1.5rem 4rem;
+      position:relative;
+    }
+
+    .hero-badge{
+      font-family:'Space Mono',monospace;
+      font-size:.72rem;
+      color:var(--amber);
+      border:1px solid var(--amber);
+      padding:.5rem 1rem;
+      margin-bottom:1.6rem;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      animation:pulseBorder 3s ease-in-out infinite;
+    }
+
+    @keyframes pulseBorder{
+      0%,100%{box-shadow:0 0 8px rgba(245,158,11,.22)}
+      50%{border-color:var(--magenta);box-shadow:0 0 18px rgba(217,70,239,.32)}
+    }
+
+    h1{
+      font-family:'Orbitron',monospace;
+      font-size:clamp(3rem,9vw,7rem);
+      line-height:1.05;
+      font-weight:900;
+      background:linear-gradient(135deg,#fff,var(--cyan),var(--purple));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      margin-bottom:1.2rem;
+    }
+
+    .hero-subtitle{
+      max-width:760px;
+      color:var(--muted);
+      font-size:clamp(1.1rem,2.5vw,1.45rem);
+      margin-bottom:2.4rem;
+    }
+
+    .hero-subtitle span{color:var(--cyan);font-weight:700}
+
+    .cta{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:1rem;
+    }
+
+    .btn{
+      border:0;
+      padding:1rem 2rem;
+      color:white;
+      font-family:'Rajdhani',sans-serif;
+      font-weight:700;
+      font-size:1rem;
+      letter-spacing:2px;
+      text-decoration:none;
+      text-transform:uppercase;
+      transition:.3s;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--purple),var(--cyan));
+      clip-path:polygon(10% 0,100% 0,100% 72%,90% 100%,0 100%,0 28%);
+    }
+
+    .btn-secondary{
+      background:transparent;
+      border:1px solid var(--border);
+      color:var(--text);
+      clip-path:polygon(0 0,90% 0,100% 28%,100% 100%,10% 100%,0 72%);
+    }
+
+    .btn:hover{transform:translateY(-3px);box-shadow:0 10px 40px rgba(109,40,217,.35)}
+
+    section{padding:6rem 1.5rem}
+    .wrap{max-width:1200px;margin:0 auto}
+
+    .section-header{text-align:center;margin-bottom:3rem}
+    .section-header h2{
+      font-family:'Orbitron',monospace;
+      font-size:clamp(2rem,5vw,3rem);
+      background:linear-gradient(90deg,var(--cyan),var(--purple));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      margin-bottom:.8rem;
+    }
+    .section-header p{color:var(--muted);font-size:1.1rem}
+
+    .terminal{
+      max-width:850px;
+      margin:3rem auto 0;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+      text-align:left;
+    }
+
+    .terminal-head{
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+      background:var(--surface2);
+      padding:.8rem 1rem;
+      border-bottom:1px solid var(--border);
+    }
+
+    .dot{width:12px;height:12px;border-radius:50%}
+    .red{background:#ef4444}.yellow{background:#eab308}.green{background:#22c55e}
+    .terminal-title{margin-left:1rem;color:var(--dim);font-family:'Space Mono',monospace;font-size:.8rem}
+
+    .terminal-body{
+      padding:1.4rem;
+      font-family:'Space Mono',monospace;
+      color:var(--muted);
+      font-size:.84rem;
+      line-height:1.9;
+    }
+
+    .cmd{color:var(--green)}
+    .arg{color:var(--cyan)}
+    .out{color:var(--text)}
+    .warn{color:var(--amber)}
+    .mag{color:var(--magenta)}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:1.2rem;
+    }
+
+    .card{
+      background:rgba(10,10,15,.92);
+      border:1px solid var(--border);
+      padding:1.6rem;
+      border-radius:10px;
+      position:relative;
+      overflow:hidden;
+      transition:.35s;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      top:0;left:0;
+      width:100%;height:2px;
+      background:linear-gradient(90deg,var(--cyan),var(--purple),var(--magenta));
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:.35s;
+    }
+
+    .card:hover{transform:translateY(-6px);border-color:var(--purple);box-shadow:0 18px 40px rgba(109,40,217,.18)}
+    .card:hover::before{transform:scaleX(1)}
+    .icon{font-size:2.3rem;margin-bottom:.9rem}
+    .card h3{font-family:'Orbitron',monospace;font-size:1rem;margin-bottom:.7rem}
+    .card p{color:var(--muted)}
+
+    .status{
+      display:inline-block;
+      margin-top:1rem;
+      padding:.25rem .7rem;
+      font-family:'Space Mono',monospace;
+      font-size:.65rem;
+      border:1px solid rgba(6,182,212,.28);
+      color:var(--cyan);
+      background:rgba(6,182,212,.08);
+    }
+
+    .arch{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:2rem;
+      overflow-x:auto;
+      font-family:'Space Mono',monospace;
+      color:var(--muted);
+      font-size:.8rem;
+      white-space:pre;
+    }
+
+    .song-box{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:2rem;
+      text-align:center;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .song-box::before{
+      content:"";
+      position:absolute;
+      inset:-60%;
+      background:conic-gradient(transparent,var(--purple),transparent,var(--cyan),transparent);
+      opacity:.08;
+      animation:spin 10s linear infinite;
+    }
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .song-inner{position:relative;z-index:1}
+
+    .wave{
+      height:130px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      gap:5px;
+      margin:2rem 0;
+    }
+
+    .bar{
+      width:7px;
+      border-radius:10px;
+      background:linear-gradient(to top,var(--purple),var(--cyan));
+      animation:wave 1.2s ease-in-out infinite;
+    }
+
+    .bar:nth-child(1){height:35%;animation-delay:0s}
+    .bar:nth-child(2){height:70%;animation-delay:.1s}
+    .bar:nth-child(3){height:50%;animation-delay:.2s}
+    .bar:nth-child(4){height:95%;animation-delay:.3s}
+    .bar:nth-child(5){height:60%;animation-delay:.4s}
+    .bar:nth-child(6){height:100%;animation-delay:.5s}
+    .bar:nth-child(7){height:55%;animation-delay:.6s}
+    .bar:nth-child(8){height:80%;animation-delay:.7s}
+    .bar:nth-child(9){height:45%;animation-delay:.8s}
+    .bar:nth-child(10){height:75%;animation-delay:.9s}
+    .bar:nth-child(11){height:65%;animation-delay:1s}
+    .bar:nth-child(12){height:85%;animation-delay:1.1s}
+
+    @keyframes wave{
+      0%,100%{transform:scaleY(.45);opacity:.55}
+      50%{transform:scaleY(1);opacity:1}
+    }
+
+    .devices{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:1rem;
+      margin-top:1.5rem;
+    }
+
+    .device{
+      border:1px solid var(--border);
+      min-width:100px;
+      padding:1rem;
+      border-radius:10px;
+      background:rgba(255,255,255,.02);
+    }
+
+    .device .dicon{font-size:1.8rem}
+    .device .name{font-family:'Space Mono',monospace;color:var(--muted);font-size:.72rem}
+    .led{width:8px;height:8px;background:var(--green);border-radius:50%;margin:.5rem auto 0;box-shadow:0 0 12px var(--green)}
+
+    footer{
+      border-top:1px solid var(--border);
+      background:var(--surface);
+      text-align:center;
+      padding:3rem 1.5rem;
+      color:var(--muted);
+    }
+
+    footer strong{color:var(--cyan)}
+
+    @media(max-width:720px){
+      nav{padding:1rem}
+      .nav-links{display:none}
+      .badge{display:none}
+      .hero{padding-top:6rem}
+      .terminal-body{font-size:.72rem}
+      .arch{font-size:.68rem;padding:1rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="cosmos"></div>
+  <div class="stars"></div>
+
+  <nav>
+    <div class="logo">UDOS</div>
+    <ul class="nav-links">
+      <li><a href="#core">Core</a></li>
+      <li><a href="#modules">Modules</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#sonic">Sonic</a></li>
+    </ul>
+    <div class="badge">v0.1.0-alpha</div>
+  </nav>
+
+  <main>
+    <section class="hero" id="core">
+      <div class="hero-badge">Universal Dragon Operating System</div>
+      <h1>UDOS</h1>
+      <p class="hero-subtitle">
+        A practical future-facing system concept by <span>Aslam</span> —
+        connecting human input, AI reasoning, safe automation, sound, devices, and EVE/NOVA intelligence into one expandable control layer.
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#sonic">Explore Dragon Sonic</a>
+        <a class="btn btn-secondary" href="#architecture">View Architecture</a>
+      </div>
+
+      <div class="terminal">
+        <div class="terminal-head">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="terminal-title">udos-core.boot</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="cmd">$</span> udos --init <span class="arg">--safe-mode</span></div>
+          <div class="out">Universal Dragon Core: ready</div>
+          <div><span class="cmd">$</span> eve --connect <span class="arg">mobile pi brain</span></div>
+          <div class="out">EVE/NOVA layer: assistant-based phone prototype active</div>
+          <div><span class="cmd">$</span> dragon-sonic --scan</div>
+          <div class="warn">Song/Sound module: concept + prototype stage</div>
+          <div class="mag">Rule: safe, legal, approval-based, rollback-ready.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="modules">
+      <div class="wrap">
+        <div class="section-header">
+          <h2>System Modules</h2>
+          <p>UDOS is not a normal OS yet. It is a layered concept: assistant-first control, memory, safety, tools, and future hardware.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <div class="icon">🧠</div>
+            <h3>EVE Brain</h3>
+            <p>Assistant core for reasoning, memory, planning, tool use, and safe command approval.</p>
+            <span class="status">ACTIVE DEV</span>
+          </div>
+
+          <div class="card">
+            <div class="icon">📱</div>
+            <h3>EVE Mobile</h3>
+            <p>Phone is not app-based. Phone is assistant-based. Moto G22 becomes the safe prototype device.</p>
+            <span class="status">PROTOTYPE</span>
+          </div>
+
+          <div class="card">
+            <div class="icon">🔊</div>
+            <h3>Dragon Sonic</h3>
+            <p>Song and sound module for audio-first interaction, speaker control, sound awareness, and future mesh playback.</p>
+            <span class="status">DESIGN</span>
+          </div>
+
+          <div class="card">
+            <div class="icon">🛡️</div>
+            <h3>Dragon Shield</h3>
+            <p>Safety layer: approvals, logs, rollback, defensive-only security learning, and private data protection.</p>
+            <span class="status">REQUIRED</span>
+          </div>
+
+          <div class="card">
+            <div class="icon">💾</div>
+            <h3>Memory Layer</h3>
+            <p>Structured storage for history, state, user preferences, project notes, and long-term system continuity.</p>
+            <span class="status">ACTIVE DEV</span>
+          </div>
+
+          <div class="card">
+            <div class="icon">🌐</div>
+            <h3>Mesh / Remote Access</h3>
+            <p>Pi5, Moto, Huawei, and future devices connected safely through local network and Tailscale.</p>
+            <span class="status">LIVE TEST</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="architecture" id="architecture">
+      <div class="wrap">
+        <div class="section-header">
+          <h2>Architecture</h2>
+          <p>A clean real-world version of the UDOS idea.</p>
+        </div>
+
+<pre class="arch">┌──────────────────────────────────────────────────────────────┐
+│                 UNIVERSAL DRAGON OS / UDOS                   │
+├──────────────────────────────────────────────────────────────┤
+│ Human Input                                                   │
+│  - voice, text, commands, mood, work needs                    │
+├──────────────────────────────────────────────────────────────┤
+│ EVE / NOVA Brain Layer                                        │
+│  - reasoning, memory, planning, approval, safety              │
+├──────────────────────────────────────────────────────────────┤
+│ Dragon Shield                                                 │
+│  - logs, rollback, legal limits, defensive-only actions       │
+├──────────────────────────────────────────────────────────────┤
+│ Tools + Device Layer                                          │
+│  - Pi5, phone, files, camera, printer, web, sound, future IoT │
+├──────────────────────────────────────────────────────────────┤
+│ Dragon Sonic                                                  │
+│  - sound input, music output, speaker routing, alerts         │
+└──────────────────────────────────────────────────────────────┘</pre>
+      </div>
+    </section>
+
+    <section class="song-module" id="sonic">
+      <div class="wrap">
+        <div class="section-header">
+          <h2>Dragon Sonic</h2>
+          <p>Song / Sound module concept for Universal Dragon OS.</p>
+        </div>
+
+        <div class="song-box">
+          <div class="song-inner">
+            <h2 style="font-family:Orbitron,monospace;">DRAGON_SONIC</h2>
+            <p style="color:var(--muted);max-width:760px;margin:0 auto;">
+              Audio-first module for listening, generating sound, controlling speakers, alerts, and future emotional soundscapes.
+            </p>
+
+            <div class="wave">
+              <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+              <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+              <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+
+            <div class="devices">
+              <div class="device"><div class="dicon">📱</div><div class="name">Moto</div><div class="led"></div></div>
+              <div class="device"><div class="dicon">🥧</div><div class="name">Pi5</div><div class="led"></div></div>
+              <div class="device"><div class="dicon">🔊</div><div class="name">Speaker</div><div class="led"></div></div>
+              <div class="device"><div class="dicon">🎙️</div><div class="name">Voice</div><div class="led"></div></div>
+              <div class="device"><div class="dicon">💡</div><div class="name">Light</div><div class="led"></div></div>
+              <div class="device"><div class="dicon">🌊</div><div class="name">Signal</div><div class="led"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Universal Dragon</strong> — created by Aslam · EVE/NOVA brain-first system · safe, practical, expandable.
+  </footer>
+</body>
+</html>
