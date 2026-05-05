@@ -398,6 +398,72 @@
       .terminal-body{font-size:.72rem}
       .arch{font-size:.68rem;padding:1rem}
     }
+  
+    .mission-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:1rem;
+      margin-top:1rem;
+    }
+    .mission-card{
+      background:#050508;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:1rem;
+      min-height:105px;
+    }
+    .mission-card h4{
+      font-family:'Orbitron',monospace;
+      font-size:.85rem;
+      margin-bottom:.5rem;
+      color:var(--cyan);
+    }
+    .mission-card p{
+      color:var(--muted);
+      margin:0;
+      font-size:.95rem;
+      line-height:1.5;
+    }
+    .signal-row{
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+      margin-top:.5rem;
+      color:var(--green);
+      font-family:'Space Mono',monospace;
+      font-size:.72rem;
+    }
+    .signal-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 12px var(--green);
+    }
+    .quick-row{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:.7rem;
+      margin-top:1rem;
+    }
+    .quick-btn{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      border-radius:12px;
+      padding:.8rem .5rem;
+      font-size:.9rem;
+      font-family:'Rajdhani',sans-serif;
+    }
+    .quick-btn:hover{
+      border-color:var(--cyan);
+      color:var(--cyan);
+    }
+    @media(max-width:720px){
+      .mission-grid{grid-template-columns:1fr}
+      .quick-row{grid-template-columns:1fr}
+    }
+
   </style>
 </head>
 <body>
@@ -558,6 +624,249 @@
         </div>
       </div>
     </section>
+  
+    <section class="eve-assistant" id="eve">
+      <div class="wrap">
+        <div class="section-header">
+          <h2>EVE Assistant</h2>
+          <p>Groq GPT-OSS-120B powered Mission Control layer for Universal Dragon OS.</p>
+        </div>
+
+        <div class="assistant-box">
+          <div class="assistant-head">
+            <div class="assistant-orb">EVE</div>
+            <div>
+              <h3>EVE Brain</h3>
+              <p id="eveStatus">Connected to UDOS local server</p>
+            </div>
+          </div>
+
+          <div id="eveReply" class="assistant-reply">
+  <div style="text-align:left">
+    <strong>EVE Mission Control online.</strong>
+
+    <div class="mission-grid">
+      <div class="mission-card">
+        <h4>🧠 Brain</h4>
+        <p>Groq GPT-OSS-120B connected. Tamil-English ready.</p>
+        <div class="signal-row"><span class="signal-dot"></span> ONLINE</div>
+      </div>
+
+      <div class="mission-card">
+        <h4>📱 Mobile</h4>
+        <p>Moto G22 assistant-based phone prototype.</p>
+        <div class="signal-row"><span class="signal-dot"></span> LAB MODE</div>
+      </div>
+
+      <div class="mission-card">
+        <h4>🥧 Pi5</h4>
+        <p>Raspberry Pi 5 server/build brain.</p>
+        <div class="signal-row"><span class="signal-dot"></span> READY</div>
+      </div>
+
+      <div class="mission-card">
+        <h4>🛡️ Shield</h4>
+        <p>Approval before risky actions. No secrets exposed.</p>
+        <div class="signal-row"><span class="signal-dot"></span> ACTIVE</div>
+      </div>
+    </div>
+
+    <div class="quick-row">
+      <button class="quick-btn" onclick="quickAsk('plan today mission')">Today Mission</button>
+      <button class="quick-btn" onclick="quickAsk('check UDOS status')">UDOS Status</button>
+      <button class="quick-btn" onclick="quickAsk('what should we build next?')">Next Build</button>
+    </div>
+  </div>
+</div>
+
+          <div class="assistant-input">
+            <input id="eveInput" placeholder="Ask EVE..." />
+            <button onclick="sendEve()">Send</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      .assistant-box{
+        max-width:850px;
+        margin:0 auto;
+        background:rgba(10,10,15,.92);
+        border:1px solid var(--border);
+        border-radius:18px;
+        padding:1.4rem;
+        box-shadow:0 20px 60px rgba(0,0,0,.45);
+      }
+      .assistant-head{
+        display:flex;
+        gap:1rem;
+        align-items:center;
+        margin-bottom:1rem;
+      }
+      .assistant-orb{
+        width:60px;
+        height:60px;
+        border-radius:50%;
+        display:grid;
+        place-items:center;
+        font-family:'Orbitron',monospace;
+        font-weight:900;
+        color:white;
+        background:linear-gradient(135deg,var(--purple),var(--cyan));
+        box-shadow:0 0 30px rgba(6,182,212,.25);
+      }
+      .assistant-head h3{
+        font-family:'Orbitron',monospace;
+        margin:0;
+      }
+      .assistant-head p{
+        color:var(--muted);
+        margin:0;
+      }
+      .assistant-reply{
+        min-height:120px;
+        white-space:pre-wrap;
+        background:#050508;
+        border:1px solid var(--border);
+        border-radius:14px;
+        padding:1rem;
+        color:var(--text);
+        font-size:1.05rem;
+      }
+      .assistant-input{
+        display:flex;
+        gap:.8rem;
+        margin-top:1rem;
+      }
+      .assistant-input input{
+        flex:1;
+        background:#050508;
+        color:var(--text);
+        border:1px solid var(--border);
+        border-radius:14px;
+        padding:1rem;
+        font-size:1rem;
+      }
+      .assistant-input button{
+        border:0;
+        border-radius:14px;
+        padding:0 1.4rem;
+        color:white;
+        font-weight:700;
+        background:linear-gradient(135deg,var(--purple),var(--cyan));
+      }
+    
+    .mission-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:1rem;
+      margin-top:1rem;
+    }
+    .mission-card{
+      background:#050508;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:1rem;
+      min-height:105px;
+    }
+    .mission-card h4{
+      font-family:'Orbitron',monospace;
+      font-size:.85rem;
+      margin-bottom:.5rem;
+      color:var(--cyan);
+    }
+    .mission-card p{
+      color:var(--muted);
+      margin:0;
+      font-size:.95rem;
+      line-height:1.5;
+    }
+    .signal-row{
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+      margin-top:.5rem;
+      color:var(--green);
+      font-family:'Space Mono',monospace;
+      font-size:.72rem;
+    }
+    .signal-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 12px var(--green);
+    }
+    .quick-row{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:.7rem;
+      margin-top:1rem;
+    }
+    .quick-btn{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      border-radius:12px;
+      padding:.8rem .5rem;
+      font-size:.9rem;
+      font-family:'Rajdhani',sans-serif;
+    }
+    .quick-btn:hover{
+      border-color:var(--cyan);
+      color:var(--cyan);
+    }
+    @media(max-width:720px){
+      .mission-grid{grid-template-columns:1fr}
+      .quick-row{grid-template-columns:1fr}
+    }
+
+  </style>
+
+    <script>
+      function cleanEve(text){
+        return String(text)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\*\*(STATUS|NEXT ACTION|COMMAND):\*\*/g, "<strong>$1:</strong>")
+          .replace(/\n/g, "<br>");
+      }
+
+      function quickAsk(text){
+        const input = document.getElementById("eveInput");
+        input.value = text;
+        sendEve();
+      }
+
+      async function sendEve(){
+        const input = document.getElementById("eveInput");
+        const reply = document.getElementById("eveReply");
+        const text = input.value.trim();
+
+        if(!text){
+          reply.innerText = "EVE: Command empty bro.";
+          return;
+        }
+
+        reply.innerHTML = "EVE thinking...";
+        input.value = "";
+
+        try{
+          const res = await fetch("/api/eve", {
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ message:text })
+          });
+
+          const data = await res.json();
+          reply.innerHTML = cleanEve(data.reply || "EVE: No reply.");
+        }catch(err){
+          reply.innerHTML = "EVE connection error. Start server.js first.";
+        }
+      }
+    </script>
+
   </main>
 
   <footer>
