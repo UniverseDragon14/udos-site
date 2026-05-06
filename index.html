@@ -829,7 +829,10 @@
           .replace(/&/g, "&amp;")
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
-          .replace(/\*\*(STATUS|NEXT ACTION|COMMAND):\*\*/g, "<strong>$1:</strong>")
+          .replace(/```bash/g, "")
+          .replace(/```/g, "")
+          .replace(/\*\*/g, "")
+          .replace(/(STATUS|NEXT ACTION|COMMAND):/g, "<strong>$1:</strong>")
           .replace(/\n/g, "<br>");
       }
 
