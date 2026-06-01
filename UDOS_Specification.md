@@ -1,6 +1,6 @@
 # Universal Dragon Operating System Specification
 
-Version: 0.1.0-alpha  
+Version: 0.1.1-alpha  
 Creator: Aslam  
 Project: Universal Dragon  
 Brain layer: EVE / NOVA
@@ -97,8 +97,32 @@ Public website can show:
 
 Public website must not show:
 - API keys
-- Pi IP
-- Tailscale IP
+- Pi IP addresses
+- remote-network IP addresses
 - private backend details
 - internal credentials
 - personal private details
+
+## 8. Small Scope Build Plan
+
+The first practical UDOS build should stay small:
+
+1. Public landing page
+2. Assistant-first mobile concept UI
+3. EVE / NOVA brain connection plan
+4. Approval-first workflow
+5. Backup and rollback rules
+6. Private backend boundary
+
+## 9. Expansion Later
+
+Later stages can explore:
+
+- kiosk-style launcher prototype
+- safer local assistant UI
+- controlled device tools
+- voice-first mobile interface
+- camera/vision module
+- robot body only when ready
+
+Everything must stay approval-first and rollback-ready.
