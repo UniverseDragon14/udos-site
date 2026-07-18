@@ -192,7 +192,81 @@
     .icon{font-size:2.25rem;margin-bottom:.8rem}.card h3{font-family:'Orbitron',monospace;font-size:1rem;margin-bottom:.65rem}.card p{color:var(--muted)}
     .status{display:inline-block;margin-top:1rem;padding:.25rem .7rem;font-family:'Space Mono',monospace;font-size:.65rem;border:1px solid rgba(6,182,212,.28);color:var(--cyan);background:rgba(6,182,212,.08);border-radius:999px}
 
-    .arch{border-radius:12px;padding:2rem;overflow-x:auto;font-family:'Space Mono',monospace;color:var(--muted);font-size:.8rem;white-space:pre}
+    /* UDOS_ARCHITECTURE_TABS_V2 */
+    .architecture-shell{
+      max-width:980px;margin:0 auto;padding:1.25rem;
+      background:rgba(10,10,15,.94);border:1px solid var(--border);
+      border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.45)
+    }
+    .architecture-options{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+      gap:.7rem;margin-bottom:1rem
+    }
+    .architecture-option{
+      appearance:none;width:100%;min-height:76px;padding:.8rem .65rem;
+      border:1px solid var(--border);border-radius:14px;
+      background:rgba(255,255,255,.025);color:var(--muted);
+      font-family:'Rajdhani',sans-serif;font-size:.92rem;font-weight:700;
+      line-height:1.15;cursor:pointer;transition:.2s
+    }
+    .architecture-option:hover{
+      transform:translateY(-2px);border-color:var(--cyan);color:var(--text)
+    }
+    .architecture-option:focus-visible{
+      outline:2px solid var(--cyan);outline-offset:3px
+    }
+    .architecture-option[aria-selected="true"]{
+      color:#fff;border-color:var(--cyan);
+      background:linear-gradient(135deg,rgba(109,40,217,.34),rgba(6,182,212,.22));
+      box-shadow:0 12px 28px rgba(6,182,212,.12)
+    }
+    .architecture-option-icon{
+      display:block;margin-bottom:.42rem;font-size:1.35rem;line-height:1
+    }
+    .architecture-panel{
+      position:relative;overflow:hidden;min-height:230px;padding:1.5rem;
+      border:1px solid var(--border);border-radius:16px;
+      background:radial-gradient(circle at 88% 10%,rgba(6,182,212,.11),transparent 38%),#050508
+    }
+    .architecture-panel::before{
+      content:'';position:absolute;inset:0 auto 0 0;width:3px;
+      background:linear-gradient(var(--cyan),var(--purple),var(--magenta))
+    }
+    .architecture-panel-head{
+      display:flex;align-items:center;gap:1rem;margin-bottom:1rem
+    }
+    .architecture-panel-icon{
+      width:54px;height:54px;flex:0 0 54px;display:grid;place-items:center;
+      border:1px solid rgba(6,182,212,.35);border-radius:16px;
+      background:rgba(6,182,212,.08);font-size:1.7rem
+    }
+    .architecture-panel-kicker{
+      color:var(--cyan);font-family:'Space Mono',monospace;
+      font-size:.68rem;letter-spacing:.12em;text-transform:uppercase
+    }
+    .architecture-panel h3{
+      margin:.15rem 0 0;font-family:'Orbitron',monospace;
+      font-size:clamp(1.15rem,3vw,1.55rem)
+    }
+    .architecture-summary{
+      max-width:760px;margin-bottom:1rem;color:var(--muted);font-size:1.05rem
+    }
+    .architecture-points{
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:.65rem;list-style:none
+    }
+    .architecture-points li{
+      position:relative;padding:.75rem .85rem .75rem 2rem;
+      border:1px solid rgba(255,255,255,.07);border-radius:12px;
+      background:rgba(255,255,255,.025);color:var(--text)
+    }
+    .architecture-points li::before{
+      content:'◆';position:absolute;left:.8rem;color:var(--cyan);font-size:.65rem
+    }
+    .architecture-flow{
+      margin:1rem 0 0;color:var(--dim);font-family:'Space Mono',monospace;
+      font-size:.7rem;line-height:1.55;text-align:center
+    }
 
     .song-box{border-radius:16px;padding:2rem;text-align:center;overflow:hidden;position:relative}
     .song-box::before{content:'';position:absolute;inset:-60%;background:conic-gradient(transparent,var(--purple),transparent,var(--cyan),transparent);opacity:.08;animation:spin 10s linear infinite}
@@ -218,74 +292,25 @@
       nav{padding:1rem}.nav-links{display:none}.badge{display:none}.hero{padding-top:6rem}.terminal-body{font-size:.72rem}.arch{font-size:.68rem;padding:1rem}.mission-grid,.quick-row{grid-template-columns:1fr}.assistant-input{flex-direction:column}.assistant-input button{padding:1rem}
     }
 
-    /* UDOS_MOBILE_ARCH_FIX_V1 */
-    .architecture .wrap,
-    #architecture .wrap {
-      width: 100%;
-      max-width: 1180px;
-      min-width: 0;
-    }
-
-    .arch {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      margin: 0;
-      overflow-x: auto;
-      overflow-y: hidden;
-      overscroll-behavior-x: contain;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-x pan-y;
-      scrollbar-width: thin;
-      scrollbar-color: var(--cyan) var(--surface2);
-    }
-
-    .arch::-webkit-scrollbar { height: 7px; }
-    .arch::-webkit-scrollbar-track {
-      background: var(--surface2);
-      border-radius: 999px;
-    }
-    .arch::-webkit-scrollbar-thumb {
-      background: linear-gradient(90deg, var(--purple), var(--cyan));
-      border-radius: 999px;
-    }
-    .arch:focus {
-      outline: 1px solid var(--cyan);
-      outline-offset: 4px;
-    }
-    .arch-hint {
-      display: none;
-      margin: 0 0 .75rem;
-      color: var(--dim);
-      font-family: 'Space Mono', monospace;
-      font-size: .68rem;
-      text-align: center;
-      letter-spacing: .03em;
-    }
-
-    @media (max-width: 720px) {
-      #architecture {
-        padding-top: 3.5rem;
-        padding-left: .75rem;
-        padding-right: .75rem;
+    @media(max-width:720px){
+      #architecture{padding:3.5rem .75rem 6rem}
+      #architecture .section-header{margin-bottom:1.5rem}
+      .architecture-shell{padding:.75rem;border-radius:14px}
+      .architecture-options{
+        grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem
       }
-      #architecture .section-header { margin-bottom: 1.5rem; }
-      #architecture .wrap {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
+      .architecture-option{
+        min-height:68px;padding:.65rem .45rem;font-size:.82rem
       }
-      .arch {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        padding: .75rem;
-        font-size: clamp(.48rem, 1.95vw, .58rem);
-        line-height: 1.65;
-        border-radius: 10px;
+      .architecture-panel{min-height:310px;padding:1.1rem}
+      .architecture-panel-head{align-items:flex-start}
+      .architecture-panel-icon{
+        width:46px;height:46px;flex-basis:46px;
+        border-radius:13px;font-size:1.45rem
       }
-      .arch-hint { display: block; }
+      .architecture-summary{font-size:.98rem}
+      .architecture-points{grid-template-columns:1fr}
+      .architecture-flow{font-size:.62rem}
     }
 
 </style>
@@ -355,27 +380,37 @@
       <div class="wrap">
         <div class="section-header">
           <h2>Architecture</h2>
-          <p>A clean public-safe version of the UDOS idea.</p>
+          <p>Tap a layer to inspect the UDOS public-safe architecture without horizontal scrolling.</p>
         </div>
-<p class="arch-hint" id="UDOS_ARCHITECTURE_SCROLL_HINT">Swipe horizontally to inspect the full architecture diagram.</p>
-<pre class="arch" tabindex="0" aria-label="Universal Dragon OS architecture diagram">┌──────────────────────────────────────────────────────────────┐
-│                 UNIVERSAL DRAGON OS / UDOS                   │
-├──────────────────────────────────────────────────────────────┤
-│ Human Input                                                   │
-│  - voice, text, commands, work needs, context                 │
-├──────────────────────────────────────────────────────────────┤
-│ EVE / NOVA Brain Layer                                        │
-│  - reasoning, memory, planning, approval, safety              │
-├──────────────────────────────────────────────────────────────┤
-│ Dragon Shield                                                 │
-│  - logs, rollback, legal limits, defensive-only actions       │
-├──────────────────────────────────────────────────────────────┤
-│ Tools + Device Layer                                          │
-│  - Pi5, phone, files, camera, printer, web, sound, future IoT │
-├──────────────────────────────────────────────────────────────┤
-│ Public Website Layer                                          │
-│  - portfolio preview only; no secrets or private backend      │
-└──────────────────────────────────────────────────────────────┘</pre>
+
+        <div class="architecture-shell" data-architecture-tabs>
+          <div class="architecture-options" role="tablist" aria-label="UDOS architecture layers">
+            <button class="architecture-option" id="arch-tab-human" type="button" role="tab" aria-selected="true" aria-controls="architecture-panel" data-architecture-key="human"><span class="architecture-option-icon" aria-hidden="true">👤</span>Human Input</button>
+            <button class="architecture-option" id="arch-tab-brain" type="button" role="tab" aria-selected="false" aria-controls="architecture-panel" data-architecture-key="brain"><span class="architecture-option-icon" aria-hidden="true">🧠</span>EVE / NOVA</button>
+            <button class="architecture-option" id="arch-tab-shield" type="button" role="tab" aria-selected="false" aria-controls="architecture-panel" data-architecture-key="shield"><span class="architecture-option-icon" aria-hidden="true">🛡️</span>Dragon Shield</button>
+            <button class="architecture-option" id="arch-tab-tools" type="button" role="tab" aria-selected="false" aria-controls="architecture-panel" data-architecture-key="tools"><span class="architecture-option-icon" aria-hidden="true">🧰</span>Tools + Devices</button>
+            <button class="architecture-option" id="arch-tab-public" type="button" role="tab" aria-selected="false" aria-controls="architecture-panel" data-architecture-key="public"><span class="architecture-option-icon" aria-hidden="true">🌐</span>Public Site</button>
+          </div>
+
+          <article class="architecture-panel" id="architecture-panel" role="tabpanel" tabindex="0" aria-labelledby="arch-tab-human">
+            <div class="architecture-panel-head">
+              <div class="architecture-panel-icon" id="architectureIcon" aria-hidden="true">👤</div>
+              <div>
+                <div class="architecture-panel-kicker" id="architectureKicker">Input Layer</div>
+                <h3 id="architectureTitle">Human Input</h3>
+              </div>
+            </div>
+            <p class="architecture-summary" id="architectureSummary">UDOS begins with a clear human goal and the context needed to understand it safely.</p>
+            <ul class="architecture-points" id="architecturePoints">
+              <li>Voice and text</li>
+              <li>Commands and work needs</li>
+              <li>Project context</li>
+              <li>Explicit owner intent</li>
+            </ul>
+          </article>
+
+          <p class="architecture-flow">HUMAN INPUT → EVE / NOVA → DRAGON SHIELD → TOOLS + DEVICES → PUBLIC-SAFE OUTPUT</p>
+        </div>
       </div>
     </section>
 
@@ -424,7 +459,7 @@
             <strong>EVE Mission Control online.</strong>
 
             <div class="mission-grid">
-              <div class="mission-card"><h4>🧠 Brain</h4><p>Public preview uses safe local responses. Private Groq bridge is not exposed.</p><div class="signal-row"><span class="signal-dot"></span> SAFE MODE</div></div>
+              <div class="mission-card"><h4>🧠 Brain</h4><p>Public preview uses safe local responses. Private AI bridge is not exposed.</p><div class="signal-row"><span class="signal-dot"></span> SAFE MODE</div></div>
               <div class="mission-card"><h4>📱 Mobile</h4><p>Moto G22 assistant-based phone prototype remains a private lab direction.</p><div class="signal-row"><span class="signal-dot"></span> LAB MODE</div></div>
               <div class="mission-card"><h4>🥧 Pi5</h4><p>Raspberry Pi 5 server/build brain details stay private.</p><div class="signal-row"><span class="signal-dot"></span> PRIVATE</div></div>
               <div class="mission-card"><h4>🛡️ Shield</h4><p>No secrets, API keys, private IPs, or terminal execution from this public page.</p><div class="signal-row"><span class="signal-dot"></span> ACTIVE</div></div>
@@ -452,6 +487,57 @@
   </footer>
 
   <script>
+    const architectureLayers = {
+      human:{icon:'👤',kicker:'Input Layer',title:'Human Input',summary:'UDOS begins with a clear human goal and the context needed to understand it safely.',points:['Voice and text','Commands and work needs','Project context','Explicit owner intent']},
+      brain:{icon:'🧠',kicker:'Reasoning Layer',title:'EVE / NOVA Brain',summary:'The intelligence layer interprets intent, plans work, uses memory, and prepares approval-aware actions.',points:['Reasoning and planning','Structured memory','Tool selection','Approval-aware proposals']},
+      shield:{icon:'🛡️',kicker:'Safety Layer',title:'Dragon Shield',summary:'Every sensitive action passes through guard rules designed for legality, traceability, and recovery.',points:['Owner approval gates','Logs and evidence','Rollback planning','Defensive-only boundaries']},
+      tools:{icon:'🧰',kicker:'Action Layer',title:'Tools + Devices',summary:'Approved plans can connect to the Universal Dragon lab without exposing private control on the public site.',points:['Raspberry Pi 5','Phones and files','Camera and printer','Sound and future IoT']},
+      public:{icon:'🌐',kicker:'Public Boundary',title:'Public Website Layer',summary:'The website presents a safe portfolio preview while private services, credentials, and device control remain isolated.',points:['Static public preview','No secrets or API keys','No private backend','No terminal execution']}
+    };
+
+    function selectArchitectureLayer(key){
+      const layer=architectureLayers[key];
+      const panel=document.getElementById('architecture-panel');
+      if(!layer||!panel)return;
+
+      document.querySelectorAll('[data-architecture-key]').forEach((button)=>{
+        const selected=button.dataset.architectureKey===key;
+        button.setAttribute('aria-selected',String(selected));
+        button.tabIndex=selected?0:-1;
+      });
+
+      const selected=document.querySelector(`[data-architecture-key="${key}"]`);
+      panel.setAttribute('aria-labelledby',selected?.id||'arch-tab-human');
+      document.getElementById('architectureIcon').textContent=layer.icon;
+      document.getElementById('architectureKicker').textContent=layer.kicker;
+      document.getElementById('architectureTitle').textContent=layer.title;
+      document.getElementById('architectureSummary').textContent=layer.summary;
+
+      const points=document.getElementById('architecturePoints');
+      points.replaceChildren(...layer.points.map((point)=>{
+        const item=document.createElement('li');
+        item.textContent=point;
+        return item;
+      }));
+    }
+
+    const architectureButtons=[...document.querySelectorAll('[data-architecture-key]')];
+    architectureButtons.forEach((button,index)=>{
+      button.addEventListener('click',()=>selectArchitectureLayer(button.dataset.architectureKey));
+      button.addEventListener('keydown',(event)=>{
+        if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+        event.preventDefault();
+        let next=index;
+        if(event.key==='ArrowLeft')next=(index-1+architectureButtons.length)%architectureButtons.length;
+        if(event.key==='ArrowRight')next=(index+1)%architectureButtons.length;
+        if(event.key==='Home')next=0;
+        if(event.key==='End')next=architectureButtons.length-1;
+        const target=architectureButtons[next];
+        target.focus();
+        selectArchitectureLayer(target.dataset.architectureKey);
+      });
+    });
+
     const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '0.0.0.0']);
     const canUsePrivateApi = LOCAL_HOSTS.has(window.location.hostname);
 
